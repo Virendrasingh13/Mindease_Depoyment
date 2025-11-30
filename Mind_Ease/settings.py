@@ -134,26 +134,16 @@ WSGI_APPLICATION = 'Mind_Ease.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME", "mydb"),
+        "USER": os.getenv("DB_USER", "postgres "),
+        "PASSWORD": os.getenv("DB_PASSWORD", "admin"),
+        "HOST": os.getenv("DB_HOST", "localhost"),
+        "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
 
-# Optional: DATABASE_URL support (postgres/mysql/sqlite). If dj-database-url is available, use it.
-DATABASE_URL = os.environ.get('DATABASE_URL')
-if DATABASE_URL:
-    try:
-        import dj_database_url  # type: ignore
-        DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
-    except Exception:
-        # Fallback: handle sqlite URLs without extra deps
-        if DATABASE_URL.startswith('sqlite'):
-            path = DATABASE_URL.split('///', 1)[1] if '///' in DATABASE_URL else 'db.sqlite3'
-            DATABASES['default'] = {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': BASE_DIR / path,
-            }
 
 
 # Password validation
