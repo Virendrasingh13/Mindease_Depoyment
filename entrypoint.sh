@@ -4,8 +4,11 @@ set -e
 echo "Waiting for database..."
 sleep 3
 
-echo "Applying database migrations..."
-python manage.py migrate --noinput
+# echo "Generating migrations..."
+# python manage.py makemigrations --noinput || true
+
+# echo "Applying database migrations..."
+# python manage.py migrate --noinput
 
 echo "Collecting static files..."
 python manage.py collectstatic --noinput

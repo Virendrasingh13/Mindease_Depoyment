@@ -17,9 +17,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
-RUN chmod +x /app/scripts/entrypoint.sh || true
+# Ensure entrypoint script is executable (correct path)
+RUN chmod +x /app/entrypoint.sh || true
 
 EXPOSE 8000
 
 # Entrypoint will handle migrations, collectstatic, then run gunicorn
-ENTRYPOINT ["/app/scripts/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
